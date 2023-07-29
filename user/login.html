@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ITUM VIS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="icon" type="image/x-icon" href="Homelogo.png">
+  <style>
+    body {
+      background-color: rgb(255, 255, 255);
+      background-image: url("DSC_2132.png");
+      background-size: cover;
+
+
+    }
+
+    .lg {
+      max-height: 100px;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="m-1 row">
+    <div class="col-md-3 " style="margin-top: 20px;">
+      <div class="logo-fluid m-3 ">
+        <img class="lg" src="site-logo.png" alt="Logo">
+      </div>
+    </div>
+    <div class="container-fluid p-2 text-center" style="margin-top: 50px;">
+      <h1 style="color: rgb(255, 255, 255);">SIGN IN</h1>
+      <p style="color: rgb(255, 255, 255);">Dont you have an account already? <a style="color:#DC3545;"
+          href="register.html">Sign Up</a></p>
+
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+
+          <form class="form-horizontal animated bounce" id="login_form" name="login_form">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input id="email" type="text" class="form-control" name="email" placeholder="Email" required>
+            </div>
+            <br>
+
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <br>
+
+            <div class="input text-center">
+              <input type="button" name="submit_btn" id="submit_btn" class="btn btn-lg btn-danger"
+                style="width: 200px;text-align: center;" value="Sign In" />
+            </div>
+          </form>
+          <br>
+     
+    
+          <div class="input bi bi-house-door-fill p-1 text-center" style="color: rgb(255, 255, 255);">
+            <a href="http://localhost/Itum%20Vehicle%20Issue/welcome.html" style="color: rgb(255, 255, 255);">Home</a>
+          </div>
+
+        </div>
+        <div class="col-md-3"></div>
+
+      </div>
+    </div>
+  </div>
+  <script>
+    $("#submit_btn").click(function (e) {
+      e.preventDefault();
+      $.ajax({
+        url: 'log.php',
+        data: $("#login_form").serialize(),
+        method: 'post',
+        success: function (response) {
+          if (response) {
+            console.log(response);
+            try {
+              var data = response;
+              var obj = JSON.parse(data);
+
+              if (obj.role == "admin") {
+                alert("Welcome Admin!");
+                window.location = 'http://localhost/Itum%20Vehicle%20Issue/admin/a_Home.html';
+              } else if (obj.role == "user") {
+                alert("Welcome User!");
+                window.location = 'http://localhost/Itum%20Vehicle%20Issue/user/Home.html';
+              } else {
+                alert("Please try again later");
+              }
+            }catch(err){
+              alert("Incorrect username and password");
+            }
+          } else {
+            alert("Incorrect username and password");
+          }
+        },
+        error: function () {
+          alert("Something Wrong");
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
